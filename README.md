@@ -18,7 +18,8 @@ This repo contains the sketch and diagrams of the arduino system.
 
 **Instructions**
 1. Wire the sensors to the Arduino according to the diagram
-2. Move the *monitoring-system* folder into the *Arduino* folder on your computer
-3. Plug the arduino into your computer
-4. In the arduino IDE, open up the *monitoring-system* sketch
-5. Click the upload button
+2. Create a new folder in the *Arduino* folder on your computer and name it whatever you want
+3. Move the *monitoring-system* folder into the new folder you created
+4. Plug the arduino into your computer
+5. In the arduino IDE, open up the *monitoring-system* sketch
+6. Click the upload button
