@@ -9,17 +9,16 @@
 #define pirPin 2
 #define LED 3
 #define DHT11_PIN 7
+
 // Defining password info
 #define Password_Length 8
 char Data[Password_Length];
 char Master[Password_Length] = "123A456"; // Change the password here
  
- 
- // Information for the servo
+// Information for the servo
 int pos = 0;
 dht DHT;
 Servo myservo;
-
 
 // Information for the Keypad
 const byte ROWS = 4; 
@@ -27,7 +26,6 @@ const byte COLS = 4;
 byte data_count = 0, master_count = 0;
 bool Pass_is_good;
 char customKey;
-
 char hexaKeys[ROWS][COLS] = {
   {'1', '2', '3', 'A'}, // You can change these values to change what the keys output
   {'4', '5', '6', 'B'},
@@ -37,7 +35,6 @@ char hexaKeys[ROWS][COLS] = {
 byte rowPins[ROWS] = {31, 33, 35, 37}; 
 byte colPins[COLS] = {39, 41, 43, 45}; 
 Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS); 
-
 
 // Information for the IR motion detector
 int calibrationTime = 30;
