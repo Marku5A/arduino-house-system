@@ -97,8 +97,10 @@ void Measure_Humidity() // Humidity sensor function
 void Enter_Password() // Keypad input function
 {
   customKey = customKeypad.getKey();
-  if (customKey) {
-    
+  if(customKey) {
+    if(customKey == '*') {
+      clearData();
+    }
     Data[data_count] = customKey;  
     Serial.print(Data[data_count]); 
     data_count++; 
