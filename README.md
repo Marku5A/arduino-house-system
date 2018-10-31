@@ -1,7 +1,7 @@
 # Arduino House Monitoring System
 This repo contains the sketch and diagrams of the arduino system.
 
-**Materials**
+**Materials:**
 * 4x4 Keypad
 * Arduino Mega 2560
 * Red LED
@@ -16,10 +16,15 @@ This repo contains the sketch and diagrams of the arduino system.
 * 2x White LED
 * Various jumper wires
 
-**Instructions**
+**Instructions:**
 1. Wire the sensors to the Arduino according to the diagram
 2. Create a new folder in the *Arduino* folder on your computer and name it whatever you want
 3. Move the *monitoring-system* folder into the new folder you created
 4. Plug the arduino into your computer
 5. In the arduino IDE, open up the *monitoring-system* sketch
 6. Click the upload button
+
+**Possible Additions:**
+* RFID Door unlock
+* Smoke detector
+* LCD screen
