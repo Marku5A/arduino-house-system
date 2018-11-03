@@ -97,25 +97,26 @@ void Measure_Humidity() // Humidity sensor function
 void Enter_Password() // Keypad input function
 {
   customKey = customKeypad.getKey();
-  if (customKey){
-    
+  if(customKey) {
+    if(customKey == '*') {
+      clearData();
+    }
     Data[data_count] = customKey;  
     Serial.print(Data[data_count]); 
     data_count++; 
-    }
+  }
 
-  if(data_count == Password_Length-1){
+  if(data_count == Password_Length-1) {
 
-    if(!strcmp(Data, Master)){ // Unlocks the door and prints to the serial monitor if the password is correct
+    if(!strcmp(Data, Master)) { // Unlocks the door and prints to the serial monitor if the password is correct
       Serial.print("\nCorrect\n");
       unlock_door();
       delay(9000);
-      }
-    else{ // If Locks the door and prints to the serial monitor if the password is incorrect
+    }else { // If Locks the door and prints to the serial monitor if the password is incorrect
       Serial.print("\nIncorrect\n");
       lock_door();
       delay(1000);
-      }
+    }
     
     clearData();  
   }
@@ -143,8 +144,9 @@ void PIRSensor() // Function for the IR motion detector
       takeLowTime = true;
    }
    if(digitalRead(pirPin) == LOW) {
-      if(takeLowTime){
-         lowIn = millis();takeLowTime = false;
+      if(takeLowTime) {
+         lowIn = millis();
+         takeLowTime = false;
       }
       if(!lockLow && millis() - lowIn > pause) {
          PIRValue = 0;
@@ -166,7 +168,7 @@ void Water_Sensor() // Water sensor function
 
 void clearData() // Clears the entered password
 {
-  while(data_count !=0){
+  while(data_count !=0) {
     Data[data_count--] = 0; 
   }
   return;
