@@ -1,5 +1,6 @@
 // Adding the various libraries
-#include <dht.h>
+#include <DHT.h>
+#include <DHT_U.h>
 #include <Keypad.h>
 #include <Servo.h>
 
@@ -17,8 +18,9 @@ char Master[Password_Length] = "123A456"; // Change the password here
  
 // Information for the servo
 int pos = 0;
-dht DHT;
 Servo myservo;
+
+dht DHT;
 
 // Information for the Keypad
 const byte ROWS = 4; 
