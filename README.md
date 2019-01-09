@@ -10,7 +10,7 @@ This repo contains the sketch and diagrams of the arduino system.
 * Water level sensor
 * DHT11 humidity & temperature sensor
 * IR Motion detector
-* MQ2 Gas Detector
+* MQ-2 Gas Detector
 * Flame Sensor
 * 2x 220Ω resistor
 * Photoresistor
