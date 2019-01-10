@@ -26,7 +26,9 @@ This repo contains the sketch and diagrams of the arduino system.
 5. In the arduino IDE, open up the *monitoring-system* sketch
 6. Click the upload button
 
+**Planned Additions**
+* Alarm goes off when the Flame or Gas sensors go off
+* LCD screen
+
 **Possible Additions:**
 * RFID Door unlock
-* Smoke detector
-* LCD screen
