@@ -13,6 +13,7 @@ There is a [website](https://github.com/Marku5A/science-website) for this repo.
 * IR Motion detector
 * MQ-2 Gas Detector
 * Flame Sensor
+* Colour Sensor
 * 2x 220Ω resistor
 * Photoresistor
 * 9v Battery
