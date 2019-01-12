@@ -144,6 +144,7 @@ void Serial_Display() // Humidity sensor function
   switch (range) {
   case 2:    // A fire closer than 1.5 feet away.
     Serial.println("** Close Fire **");
+    activate_alarm();
     break;
   case 1:    // A fire between 1-3 feet away.
     Serial.println("** Distant Fire **");
@@ -158,6 +159,10 @@ void Serial_Display() // Humidity sensor function
   Serial.println(DHT.humidity);
   Serial.print("Gas = ");
   Serial.println(analogRead(gasPin));
+  if ((analogRead(gasPin)) >= 700)
+  {
+    activate_alarm();
+  }
   Serial.print("---------------\n\n");
   delay(100);
 }
