@@ -1,15 +1,18 @@
-// Adding the various libraries
-#include <DHT.h>
-#include <DHT_U.h>
+#include <dht.h>
 #include <Keypad.h>
 #include <Servo.h>
 
+
 // Defining pin numbers
+int frequency = 0;
 #define water_sensor A0
 #define alarm 8
 #define pirPin 2
 #define LED 3
 #define DHT11_PIN 7
+const int sensorMin = 0;     // sensor minimum
+const int sensorMax = 1024;  // sensor maximum
+dht DHT;
 
 // Defining password info
 #define Password_Length 8
@@ -19,8 +22,6 @@ char Master[Password_Length] = "123A456"; // Change the password here
 // Information for the servo
 int pos = 0;
 Servo myservo;
-
-dht DHT;
 
 // Information for the Keypad
 const byte ROWS = 4; 
@@ -49,17 +50,24 @@ int PIRValue = 0;
 
 void setup() // The setup function, to run once
 {
+  pinMode(S0, OUTPUT);
+  pinMode(S1, OUTPUT);
+  pinMode(S2, OUTPUT);
+  pinMode(S3, OUTPUT);
+  pinMode(sensorOut, INPUT);
   myservo.attach(6); // Attaches the servo to pin 6
   Serial.begin(9600); // Begins the serial monitor at 9600 Baud
   pinMode(pirPin, INPUT); // Sets the PIR pin to an input
   pinMode(water_sensor, INPUT); // Sets the water sensor pin to an input
   pinMode(alarm, OUTPUT); // Sets the alarm pin to an output
   pinMode(LED, OUTPUT); // Sets the LED pin to an output
+  digitalWrite(S0,HIGH);
+  digitalWrite(S1,LOW);
 }
 
 void loop() // Function to run continuosly
 {
-  Measure_Humidity(); // Runs the humidity sensor function
+  Serial_Display(); // Runs the humidity sensor function
   Enter_Password(); // Runs the keypad function
   Photoresistor(); // Runs the photoresistor function
   PIRSensor(); // Runs the IR motion detector function
@@ -85,15 +93,14 @@ void unlock_door() // Function to unlock the door with the servo
   myservo.write(0);
 }
 
-void Measure_Humidity() // Humidity sensor function
+void Serial_Display() // Humidity sensor function
 {
-  /* Comment out the serial printing lines if you want to diplay the keypad presses */
-  int chk = DHT.read11(DHT11_PIN); // Reads the humidity and temperature
-  Serial.print("Temperature = "); // Prints the temperature
+  Serial.print("Temperature = ");
   Serial.println(DHT.temperature);
-  Serial.print("Humidity = "); // Prints the humidity
+  Serial.print("Humidity = ");
   Serial.println(DHT.humidity);
-  delay(1000);
+  Serial.print("---------------\n\n");
+  delay(100);
 }
 
 void Enter_Password() // Keypad input function
@@ -104,18 +111,18 @@ void Enter_Password() // Keypad input function
       clearData();
     }
     Data[data_count] = customKey;  
-    Serial.print(Data[data_count]); 
+    //Serial.print(Data[data_count]); 
     data_count++; 
   }
 
   if(data_count == Password_Length-1) {
 
     if(!strcmp(Data, Master)) { // Unlocks the door and prints to the serial monitor if the password is correct
-      Serial.print("\nCorrect\n");
+      //Serial.print("\nCorrect\n");
       unlock_door();
       delay(9000);
     }else { // If Locks the door and prints to the serial monitor if the password is incorrect
-      Serial.print("\nIncorrect\n");
+     // Serial.print("\nIncorrect\n");
       lock_door();
       delay(1000);
     }
