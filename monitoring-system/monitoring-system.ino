@@ -5,6 +5,11 @@
 
 // Defining pin numbers
 int frequency = 0;
+#define S0 4
+#define S1 5
+#define S2 9
+#define S3 10
+#define sensorOut 11
 #define water_sensor A0
 #define alarm 8
 #define pirPin 2
@@ -12,6 +17,7 @@ int frequency = 0;
 #define DHT11_PIN 7
 const int sensorMin = 0;     // sensor minimum
 const int sensorMax = 1024;  // sensor maximum
+const int gasPin = A2;
 dht DHT;
 
 // Defining password info
@@ -95,10 +101,63 @@ void unlock_door() // Function to unlock the door with the servo
 
 void Serial_Display() // Humidity sensor function
 {
+  // Setting red filtered photodiodes to be read
+  digitalWrite(S2,LOW);
+  digitalWrite(S3,LOW);
+  // Reading the output frequency
+  frequency = pulseIn(sensorOut, LOW);
+  //Remaping the value of the frequency to the RGB Model of 0 to 255
+  frequency = map(frequency, 25,72,255,0);
+  // Printing the value on the serial monitor
+  Serial.print("R= ");//printing name
+  Serial.print(frequency);//printing RED color frequency
+  Serial.print("  ");
+  delay(100);
+
+  // Setting Green filtered photodiodes to be read
+  digitalWrite(S2,HIGH);
+  digitalWrite(S3,HIGH);
+  // Reading the output frequency
+  frequency = pulseIn(sensorOut, LOW);
+  //Remaping the value of the frequency to the RGB Model of 0 to 255
+  frequency = map(frequency, 30,90,255,0);
+  // Printing the value on the serial monitor
+  Serial.print("G= ");//printing name
+  Serial.print(frequency);//printing RED color frequency
+  Serial.print("  ");
+  delay(100);
+
+  // Setting Blue filtered photodiodes to be read
+  digitalWrite(S2,LOW);
+  digitalWrite(S3,HIGH);
+  // Reading the output frequency
+  frequency = pulseIn(sensorOut, LOW);
+  //Remaping the value of the frequency to the RGB Model of 0 to 255
+  frequency = map(frequency, 25,70,255,0);
+  // Printing the value on the serial monitor
+  Serial.print("B= ");//printing name
+  Serial.print(frequency);//printing RED color frequency
+  Serial.println("  ");
+  int sensorReading = analogRead(A3);
+  int range = map(sensorReading, sensorMin, sensorMax, 0, 3);
+  int chk = DHT.read11(DHT11_PIN);
+  switch (range) {
+  case 2:    // A fire closer than 1.5 feet away.
+    Serial.println("** Close Fire **");
+    break;
+  case 1:    // A fire between 1-3 feet away.
+    Serial.println("** Distant Fire **");
+    break;
+  case 0:    // No fire detected.
+    Serial.println("No Fire");
+    break;
+  }
   Serial.print("Temperature = ");
   Serial.println(DHT.temperature);
   Serial.print("Humidity = ");
   Serial.println(DHT.humidity);
+  Serial.print("Gas = ");
+  Serial.println(analogRead(gasPin));
   Serial.print("---------------\n\n");
   delay(100);
 }
