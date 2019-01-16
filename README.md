@@ -29,7 +29,6 @@ There is a [website](https://github.com/Marku5A/science-website) for this repo.
 6. Click the upload button
 
 **Planned Additions**
-* Alarm goes off when the Flame or Gas sensors go off
 * LCD screen
 
 **Possible Additions:**
