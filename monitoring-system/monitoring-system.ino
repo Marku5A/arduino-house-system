@@ -2,6 +2,12 @@
 #include <Keypad.h>
 #include <Servo.h>
 
+//Colour structure
+struct Colours {
+  int red;
+  int green;
+  int blue;
+} colours;
 
 // Defining pin numbers
 int frequency = 0;
@@ -99,8 +105,7 @@ void unlock_door() // Function to unlock the door with the servo
   myservo.write(0);
 }
 
-void Serial_Display() // Humidity sensor function
-{
+void ColourSensor() {
   // Setting red filtered photodiodes to be read
   digitalWrite(S2,LOW);
   digitalWrite(S3,LOW);
@@ -108,25 +113,17 @@ void Serial_Display() // Humidity sensor function
   frequency = pulseIn(sensorOut, LOW);
   //Remaping the value of the frequency to the RGB Model of 0 to 255
   frequency = map(frequency, 25,72,255,0);
-  // Printing the value on the serial monitor
-  Serial.print("R= ");//printing name
-  Serial.print(frequency);//printing RED color frequency
-  Serial.print("  ");
-  delay(100);
-
-  // Setting Green filtered photodiodes to be read
+  colours.red = frequency;
+  
+  //Setting Green filtered photodiodes to be read
   digitalWrite(S2,HIGH);
   digitalWrite(S3,HIGH);
   // Reading the output frequency
   frequency = pulseIn(sensorOut, LOW);
   //Remaping the value of the frequency to the RGB Model of 0 to 255
   frequency = map(frequency, 30,90,255,0);
-  // Printing the value on the serial monitor
-  Serial.print("G= ");//printing name
-  Serial.print(frequency);//printing RED color frequency
-  Serial.print("  ");
-  delay(100);
-
+  colours.green = frequency;
+ 
   // Setting Blue filtered photodiodes to be read
   digitalWrite(S2,LOW);
   digitalWrite(S3,HIGH);
@@ -134,10 +131,29 @@ void Serial_Display() // Humidity sensor function
   frequency = pulseIn(sensorOut, LOW);
   //Remaping the value of the frequency to the RGB Model of 0 to 255
   frequency = map(frequency, 25,70,255,0);
+  colours.blue = frequency;
+}
+void Serial_Display() // Humidity sensor function
+{
+  ColourSensor();
+  // Printing the value on the serial monitor
+  Serial.print("R= ");//printing name
+  Serial.print(colours.red);//printing RED color frequency
+  Serial.print("  ");
+  delay(100);
+
+  // Printing the value on the serial monitor
+  Serial.print("G= ");//printing name
+  Serial.print(colours.green);//printing RED color frequency
+  Serial.print("  ");
+  delay(100);
+
+  
   // Printing the value on the serial monitor
   Serial.print("B= ");//printing name
-  Serial.print(frequency);//printing RED color frequency
+  Serial.print(colours.blue);//printing RED color frequency
   Serial.println("  ");
+
   int sensorReading = analogRead(A3);
   int range = map(sensorReading, sensorMin, sensorMax, 0, 3);
   int chk = DHT.read11(DHT11_PIN);
