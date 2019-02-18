@@ -30,6 +30,3 @@ There is a [website](https://marku5a.github.io/science-website/) for this repo.
 
 **Planned Additions**
 * LCD screen
-
-**Possible Additions:**
-* RFID Door unlock
